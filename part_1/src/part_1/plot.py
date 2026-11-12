@@ -2,7 +2,9 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
 from pandas import DataFrame
+from sklearn.metrics import confusion_matrix
 
 
 def plot_curve(
@@ -28,27 +30,20 @@ def plot_curve(
     plt.savefig(out_path)
 
 
-def plot_confusion_matrix(real, pred):
-    # TO BE FIXED
-
-    # Plot heatmap
-    cm_array = np.array([
-        [cm['true_negatives'], cm['false_positives']],
-        [cm['false_negatives'], cm['true_positives']],
-    ])
+def plot_confusion_matrix(real, pred, title: str, path: Path):
+    cm = confusion_matrix(real, pred)
 
     plt.figure(figsize=(6, 5))
     sns.heatmap(
-        cm_array,
-        annot=cm_array,
+        cm,
+        annot=cm,
         fmt='',
         cmap='Blues',
         xticklabels=['Predicted 0', 'Predicted 1'],
         yticklabels=['Real 0', 'Real 1'],
         cbar_kws={'label': 'Count'},
     )
-    plt.title(f'Confusion Matrix (threshold={cm["threshold"]:.4f}, {threshold_name})')
+    plt.title(title)
     plt.tight_layout()
-    plt.savefig(plot_path)
+    plt.savefig(path)
     plt.close()
-    print(f"Saved {plot_path}")

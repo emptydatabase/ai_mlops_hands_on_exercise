@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 
 from .feature_selection import feature_selection
 from .models import neural_network_predict, random_forest_predict
-from .plot import plot_curve
+from .plot import plot_curve, plot_confusion_matrix
 from .roc_prc import roc_prc, best_point
 
 
@@ -89,4 +89,24 @@ def part_1_plot(
         "Recall",
         "NN PRC curve",
         out_plots / "nn_prc.png"
+    )
+
+    # Plot confusion matrix
+    plot_confusion_matrix(
+        real=rf_df["real"],
+        pred=rf_df["pred"],
+        title="Random Forest",
+        path=out_plots / "rf_cm.png"
+    )
+    plot_confusion_matrix(
+        real=nn_df["real"],
+        pred=nn_df["pred"] > best_roc["thresholds"].iloc[0],
+        title="Neural Network (Best ROC threshold)",
+        path=out_plots / "nn_roc_cm.png"
+    )
+    plot_confusion_matrix(
+        real=nn_df["real"],
+        pred=nn_df["pred"] > best_prc["thresholds"].iloc[0],
+        title="Neural Network (Best PRC threshold)",
+        path=out_plots / "nn_prc_cm.png"
     )
