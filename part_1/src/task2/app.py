@@ -19,7 +19,14 @@ from dash import (
 )
 from plotly.subplots import make_subplots
 
-from .data import PredictionData, load_clean_dataset, load_predictions
+from .data import (
+    PredictionData,
+    categorical_columns,
+    load_clean_dataset,
+    load_predictions,
+    numeric_columns,
+)
+from .metrics import cramers_v_matrix, pearson_correlation
 
 DEFAULT_HOST = "0.0.0.0"
 DEFAULT_PORT = 8050
@@ -322,11 +329,119 @@ def _build_histograms(
     )
 
 
+def _correlation_heatmap(
+    matrix: pd.DataFrame,
+    title: str,
+    colorscale: str,
+    colorbar_title: str,
+    note: str,
+) -> html.Div:
+    labels = [pretty_column_name(column) for column in matrix.columns]
+    values = matrix.to_numpy()
+    text = matrix.round(2).to_numpy()
+    is_diverging = colorscale == "RdBu"
+
+    figure = go.Figure(
+        go.Heatmap(
+            z=values,
+            x=labels,
+            y=labels,
+            zmin=-1 if is_diverging else 0,
+            zmax=1,
+            colorscale=colorscale,
+            reversescale=is_diverging,
+            colorbar={"title": colorbar_title},
+            text=text,
+            texttemplate="%{text:.2f}",
+            hovertemplate="%{y} vs %{x}<br>%{z:.3f}<extra></extra>",
+        )
+    )
+    figure.update_layout(
+        title=title,
+        xaxis_title="Feature",
+        yaxis_title="Feature",
+        height=max(420, 60 * len(labels) + 220),
+        margin={"l": 70, "r": 20, "t": 70, "b": 90},
+    )
+    figure.update_xaxes(tickangle=-45)
+
+    return html.Div(
+        [
+            dcc.Graph(
+                figure=figure,
+                config={"displaylogo": False, "responsive": True},
+            ),
+            html.P(note, className="text-muted small mt-2 mb-0"),
+        ]
+    )
+
+
+def _build_correlation(
+    dataset: pd.DataFrame,
+    selected_features: list[str] | None,
+    corr_method: str | None,
+) -> html.Div | dbc.Alert:
+    selected = _valid_features(dataset, selected_features)
+
+    if corr_method == "categorical":
+        columns = [
+            column
+            for column in categorical_columns(dataset)
+            if column in selected
+        ]
+        if len(columns) < 2:
+            return dbc.Alert(
+                "Select at least two categorical features to compute "
+                "Cramér's V.",
+                color="warning",
+                className="mb-0",
+            )
+
+        matrix = cramers_v_matrix(dataset, columns)
+        return _correlation_heatmap(
+            matrix,
+            title="Cramér's V association between categorical features",
+            colorscale="Blues",
+            colorbar_title="Cramér's V",
+            note=(
+                "Cramér's V ranges from 0 (no association) to 1 (strong "
+                "association); it is computed from contingency tables without "
+                "one-hot encoding."
+            ),
+        )
+
+    columns = [
+        column
+        for column in numeric_columns(dataset)
+        if column in selected
+    ]
+    if len(columns) < 2:
+        return dbc.Alert(
+            "Select at least two numeric features to compute Pearson "
+            "correlation.",
+            color="warning",
+            className="mb-0",
+        )
+
+    matrix = pearson_correlation(dataset, columns)
+    return _correlation_heatmap(
+        matrix,
+        title="Pearson correlation between numeric features",
+        colorscale="RdBu",
+        colorbar_title="Pearson r",
+        note=(
+            "Pearson r ranges from -1 to 1; values near ±1 indicate a strong "
+            "linear relationship."
+        ),
+    )
+
+
 def _render_explorer(
     dataset: pd.DataFrame,
     viz_type: str | None,
     selected_features: list[str] | None,
     split_by_target: bool = False,
+    corr_method: str | None = None,
 ) -> dash_table.DataTable | html.Div | dbc.Alert:
     if viz_type == "Table":
         return _build_table(dataset, selected_features)
@@ -335,15 +450,7 @@ def _render_explorer(
         return _build_histograms(dataset, selected_features, split_by_target)
 
     if viz_type == "Correlation":
-        return dbc.Alert(
-            [
-                html.Strong("Correlation view"),
-                " will be added in the next prompt. Select Table or "
-                "Histogram to explore the cleaned dataset now.",
-            ],
-            color="info",
-            className="mb-0",
-        )
+        return _build_correlation(dataset, selected_features, corr_method)
 
     return dbc.Alert(
         "Choose a visualisation type to continue.",
@@ -452,6 +559,34 @@ def _build_layout(dataset: pd.DataFrame, predictions: PredictionData) -> dbc.Con
                         ],
                         className="g-2 mt-1",
                     ),
+                    dbc.Row(
+                        dbc.Col(
+                            [
+                                dbc.Label(
+                                    "Correlation method",
+                                    html_for="corr-method",
+                                ),
+                                dbc.RadioItems(
+                                    id="corr-method",
+                                    options=[
+                                        {
+                                            "label": "Numeric (Pearson)",
+                                            "value": "numeric",
+                                        },
+                                        {
+                                            "label": "Categorical (Cramér's V)",
+                                            "value": "categorical",
+                                        },
+                                    ],
+                                    value="numeric",
+                                    inline=True,
+                                    className="small",
+                                ),
+                            ],
+                            md=8,
+                        ),
+                        className="g-3 mt-1",
+                    ),
                     dbc.Checklist(
                         id="split-by-target",
                         options=[
@@ -555,11 +690,13 @@ def create_app(
         Input("viz-type", "value"),
         Input("feature-select", "value"),
         Input("split-by-target", "value"),
+        Input("corr-method", "value"),
     )
     def update_explorer(
         viz_type: str | None,
         selected_features: list[str] | None,
         split_value: list[str] | None,
+        corr_method: str | None,
     ) -> dash_table.DataTable | html.Div | dbc.Alert:
         split_by_target = "split" in (split_value or [])
         return _render_explorer(
@@ -567,6 +704,7 @@ def create_app(
             viz_type,
             selected_features,
             split_by_target,
+            corr_method,
         )
 
     @app.callback(
