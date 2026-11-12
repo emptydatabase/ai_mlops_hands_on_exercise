@@ -5,4 +5,5 @@
 | 09:37 | Write a script for plotting the two curves         | Yes                          |
 | 09:59 | Write a script for saving the two confusion matrices    | Yes                          |
 | 11.17 | Fix the plot_confusion_matrix function| No, made by hand              |
+| 12:14 | Create task 1 report| Yes            |
 | 12:53 | Started implementing task 2| Yes            |
