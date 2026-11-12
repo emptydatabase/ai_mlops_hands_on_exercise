@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-from math import ceil
+from math import ceil, floor
 from pathlib import Path
 
 import dash_bootstrap_components as dbc
@@ -26,7 +26,7 @@ from .data import (
     load_predictions,
     numeric_columns,
 )
-from .metrics import cramers_v_matrix, pearson_correlation
+from .metrics import confusion_metrics, cramers_v_matrix, pearson_correlation
 
 DEFAULT_HOST = "0.0.0.0"
 DEFAULT_PORT = 8050
@@ -49,6 +49,9 @@ TARGET_COLORS = {False: "#8da0cb", True: "#e78ac3"}
 
 MAX_HISTOGRAM_FEATURES = 4
 HISTOGRAM_BINS = 30
+
+CONFUSION_LABELS = ["<=50K", ">50K"]
+RF_HARD_LABEL_THRESHOLD = 0.5
 
 
 def pretty_column_name(column: str) -> str:
@@ -459,6 +462,280 @@ def _render_explorer(
     )
 
 
+def _score_bounds(predictions: PredictionData) -> tuple[float, float]:
+    """Round the combined score range outward to two decimal places."""
+    minimum = floor(predictions.score_min * 100) / 100
+    maximum = ceil(predictions.score_max * 100) / 100
+    return float(minimum), float(maximum)
+
+
+def _threshold_marks(minimum: float, maximum: float) -> dict[float, str]:
+    candidates = {minimum, maximum, 0.0, 0.25, 0.5, 0.75, 1.0}
+    values = sorted(
+        value for value in candidates if minimum <= value <= maximum
+    )
+    return {value: f"{value:g}" for value in values}
+
+
+def _metric_card(label: str, value: float) -> dbc.Card:
+    return dbc.Card(
+        dbc.CardBody(
+            [
+                html.Div(label, className="text-muted small text-uppercase"),
+                html.Div(f"{value:.2%}", className="fs-4 fw-semibold"),
+            ],
+            className="py-2",
+        ),
+        className="h-100 shadow-sm",
+    )
+
+
+def _confusion_figure(
+    metrics: dict[str, int | float],
+    title: str,
+) -> dcc.Graph:
+    values = [
+        [metrics["tn"], metrics["fp"]],
+        [metrics["fn"], metrics["tp"]],
+    ]
+    text = [[f"{int(value):,}" for value in row] for row in values]
+
+    figure = go.Figure(
+        go.Heatmap(
+            z=values,
+            x=CONFUSION_LABELS,
+            y=CONFUSION_LABELS,
+            text=text,
+            texttemplate="%{text}",
+            colorscale="Blues",
+            showscale=False,
+            hovertemplate=(
+                "Actual %{y}<br>Predicted %{x}<br>Count %{z}<extra></extra>"
+            ),
+        )
+    )
+    figure.update_layout(
+        title=title,
+        xaxis_title="Predicted label",
+        yaxis_title="Actual label",
+        height=360,
+        margin={"l": 70, "r": 20, "t": 60, "b": 60},
+    )
+
+    return dcc.Graph(
+        figure=figure,
+        config={"displaylogo": False, "responsive": True},
+    )
+
+
+def _counts_line(metrics: dict[str, int | float]) -> html.P:
+    return html.P(
+        [
+            html.Strong("TP"), f" {int(metrics['tp']):,}",
+            " · ",
+            html.Strong("FP"), f" {int(metrics['fp']):,}",
+            " · ",
+            html.Strong("FN"), f" {int(metrics['fn']):,}",
+            " · ",
+            html.Strong("TN"), f" {int(metrics['tn']):,}",
+            " · ",
+            html.Strong("Predicted positives"),
+            f" {int(metrics['predicted_positive']):,}",
+        ],
+        className="text-muted small mb-3",
+    )
+
+
+def _comparison_table(
+    nn_metrics: dict[str, int | float],
+    rf_metrics: dict[str, int | float],
+) -> dash_table.DataTable:
+    rows = [
+        {
+            "Model": "Neural network",
+            "Accuracy": f"{float(nn_metrics['accuracy']):.2%}",
+            "Precision": f"{float(nn_metrics['precision']):.2%}",
+            "Recall": f"{float(nn_metrics['recall']):.2%}",
+            "F1": f"{float(nn_metrics['f1']):.2%}",
+            "TP": int(nn_metrics["tp"]),
+            "FP": int(nn_metrics["fp"]),
+            "FN": int(nn_metrics["fn"]),
+            "TN": int(nn_metrics["tn"]),
+        },
+        {
+            "Model": "Random forest",
+            "Accuracy": f"{float(rf_metrics['accuracy']):.2%}",
+            "Precision": f"{float(rf_metrics['precision']):.2%}",
+            "Recall": f"{float(rf_metrics['recall']):.2%}",
+            "F1": f"{float(rf_metrics['f1']):.2%}",
+            "TP": int(rf_metrics["tp"]),
+            "FP": int(rf_metrics["fp"]),
+            "FN": int(rf_metrics["fn"]),
+            "TN": int(rf_metrics["tn"]),
+        },
+    ]
+
+    return dash_table.DataTable(
+        data=rows,
+        columns=[
+            {"name": column, "id": column}
+            for column in (
+                "Model",
+                "Accuracy",
+                "Precision",
+                "Recall",
+                "F1",
+                "TP",
+                "FP",
+                "FN",
+                "TN",
+            )
+        ],
+        style_table={"overflowX": "auto"},
+        style_cell={
+            "fontFamily": "inherit",
+            "fontSize": "0.875rem",
+            "padding": "0.4rem 0.6rem",
+            "textAlign": "center",
+            "whiteSpace": "normal",
+        },
+        style_cell_conditional=[{"if": {"column_id": "Model"}, "textAlign": "left"}],
+        style_header={"fontWeight": "600"},
+        style_as_list_view=True,
+    )
+
+
+def _render_model_evaluation(
+    predictions: PredictionData,
+    threshold: float | None,
+    compare_rf: bool,
+) -> html.Div:
+    current_threshold = (
+        predictions.threshold_default if threshold is None else float(threshold)
+    )
+    nn_metrics = confusion_metrics(
+        predictions.y_true,
+        predictions.nn_score,
+        current_threshold,
+    )
+
+    children: list = [
+        html.H5("Thresholded model comparison", className="card-title mb-1"),
+        html.P(
+            [
+                "Evaluation set: ",
+                html.Strong(f"{predictions.size:,}"),
+                " held-out rows. A row is predicted positive when its score "
+                "is strictly greater than the threshold.",
+            ],
+            className="text-muted small mb-3",
+        ),
+        dbc.Row(
+            [
+                dbc.Col(
+                    _metric_card("Accuracy", float(nn_metrics["accuracy"])),
+                    xs=6,
+                    md=3,
+                ),
+                dbc.Col(
+                    _metric_card("Precision", float(nn_metrics["precision"])),
+                    xs=6,
+                    md=3,
+                ),
+                dbc.Col(
+                    _metric_card("Recall", float(nn_metrics["recall"])),
+                    xs=6,
+                    md=3,
+                ),
+                dbc.Col(
+                    _metric_card("F1", float(nn_metrics["f1"])),
+                    xs=6,
+                    md=3,
+                ),
+            ],
+            className="g-2 mb-3",
+        ),
+        _counts_line(nn_metrics),
+        html.P(
+            "The neural network is a regressor; its scores are not calibrated "
+            "probabilities.",
+            className="text-muted small mb-3",
+        ),
+        html.P(
+            "Task 1's report quotes a 0.362 cut-off, but its published metrics "
+            "match a slightly higher effective threshold. The figures here are "
+            "recomputed from the saved scores with the same strict "
+            "score > threshold rule.",
+            className="text-muted small fst-italic mb-4",
+        ),
+    ]
+
+    nn_column = dbc.Col(
+        _confusion_figure(
+            nn_metrics,
+            f"Neural network confusion matrix (threshold "
+            f"{current_threshold:.3f})",
+        ),
+        xs=12,
+        lg=6 if compare_rf else 12,
+    )
+
+    if compare_rf:
+        if predictions.rf_has_proba:
+            rf_threshold = current_threshold
+            rf_metrics = confusion_metrics(
+                predictions.y_true,
+                predictions.rf_score,
+                rf_threshold,
+            )
+            rf_title = (
+                "Random forest confusion matrix (threshold "
+                f"{rf_threshold:.3f})"
+            )
+        else:
+            rf_threshold = RF_HARD_LABEL_THRESHOLD
+            rf_metrics = confusion_metrics(
+                predictions.y_true,
+                predictions.rf_score,
+                rf_threshold,
+            )
+            rf_title = (
+                "Random forest confusion matrix "
+                "(hard labels at the 0.5 cut-off)"
+            )
+
+        children.append(
+            dbc.Row(
+                [
+                    nn_column,
+                    dbc.Col(
+                        _confusion_figure(rf_metrics, rf_title),
+                        xs=12,
+                        lg=6,
+                    ),
+                ],
+                className="g-3",
+            )
+        )
+        children.append(html.Div(className="mt-3"))
+        children.append(
+            html.H6("Model comparison", className="text-uppercase small")
+        )
+        children.append(_comparison_table(nn_metrics, rf_metrics))
+        if not predictions.rf_has_proba:
+            children.append(
+                html.P(
+                    "RF has no saved probabilities; this matrix is fixed at "
+                    "the 0.5 hard-label cut-off.",
+                    className="text-warning-emphasis small mt-2 mb-0",
+                )
+            )
+    else:
+        children.append(dbc.Row([nn_column], className="g-3"))
+
+    return html.Div(children)
+
+
 def _env_flag(name: str, default: bool = False) -> bool:
     raw = os.environ.get(name)
     if raw is None:
@@ -623,24 +900,79 @@ def _build_layout(dataset: pd.DataFrame, predictions: PredictionData) -> dbc.Con
         className="shadow-sm",
     )
 
+    threshold_min, threshold_max = _score_bounds(predictions)
     model_tab = dbc.Card(
         [
             dbc.CardHeader("Model evaluation"),
             dbc.CardBody(
                 [
-                    html.H5("Thresholded model comparison", className="card-title"),
-                    html.P(
-                        "The score threshold, confusion matrices, and random "
-                        "forest comparison will be added in the next prompts.",
-                        className="card-text",
+                    dbc.Card(
+                        dbc.CardBody(
+                            [
+                                html.H5(
+                                    "Decision threshold",
+                                    className="card-title",
+                                ),
+                                dbc.Row(
+                                    [
+                                        dbc.Col(
+                                            [
+                                                dbc.Label(
+                                                    "Score threshold",
+                                                    html_for="threshold-slider",
+                                                ),
+                                                dcc.Slider(
+                                                    id="threshold-slider",
+                                                    min=threshold_min,
+                                                    max=threshold_max,
+                                                    step=0.001,
+                                                    value=predictions.threshold_default,
+                                                    marks=_threshold_marks(
+                                                        threshold_min,
+                                                        threshold_max,
+                                                    ),
+                                                    tooltip={
+                                                        "placement": "bottom",
+                                                        "always_visible": True,
+                                                    },
+                                                    className="mb-4",
+                                                ),
+                                            ],
+                                            md=8,
+                                        ),
+                                        dbc.Col(
+                                            [
+                                                dbc.Switch(
+                                                    id="compare-rf",
+                                                    label=(
+                                                        "Compare with Random "
+                                                        "Forest"
+                                                    ),
+                                                    value=False,
+                                                ),
+                                                html.P(
+                                                    "The neural network score "
+                                                    "is thresholded on every "
+                                                    "change; the random forest "
+                                                    "comparison uses saved "
+                                                    "artefacts only.",
+                                                    className="text-muted "
+                                                    "small mb-0",
+                                                ),
+                                            ],
+                                            md=4,
+                                            className="pt-md-4",
+                                        ),
+                                    ],
+                                    className="g-3",
+                                ),
+                            ]
+                        ),
+                        className="bg-light border-0",
                     ),
-                    html.P(
-                        [
-                            "Evaluation set: ",
-                            html.Strong(f"{predictions.size:,}"),
-                            " held-out rows",
-                        ],
-                        className="text-muted mb-0",
+                    dcc.Loading(
+                        html.Div(id="model-output"),
+                        type="default",
                     ),
                 ]
             ),
@@ -705,6 +1037,21 @@ def create_app(
             selected_features,
             split_by_target,
             corr_method,
+        )
+
+    @app.callback(
+        Output("model-output", "children"),
+        Input("threshold-slider", "value"),
+        Input("compare-rf", "value"),
+    )
+    def update_model_evaluation(
+        threshold: float | None,
+        compare_rf: bool | None,
+    ) -> html.Div:
+        return _render_model_evaluation(
+            predictions,
+            threshold,
+            bool(compare_rf),
         )
 
     @app.callback(

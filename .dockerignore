@@ -1,0 +1,36 @@
+# Version control and editor state
+.git
+.gitignore
+.idea
+.vscode
+.opencode
+
+# Python environments and caches
+.venv
+**/.venv
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/.pytest_cache
+**/.ruff_cache
+**/.mypy_cache
+**/.coverage
+**/coverage.xml
+**/htmlcov
+**/.ipynb_checkpoints
+
+# Task 2 generated outputs (regenerated in the image build)
+part_1/plots
+part_1/dataset/census.csv
+part_1/dataset/census_clean.csv
+part_1/dataset/census_clean_meta.json
+
+# Test caches and local artefacts
+**/test-results
+**/test-results.xml
+**/.tox
+**/.nox
+
+# Only the raw census file is needed from the datasets directory.
+datasets/*
+!datasets/census_income.csv

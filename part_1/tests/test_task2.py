@@ -13,6 +13,8 @@ from task2.cleaning import (
     categorical_columns,
     numeric_columns,
 )
+from task2.data import load_predictions
+from task2.metrics import confusion_metrics
 
 RAW_PATH = (
     Path(__file__).resolve().parents[2] / "datasets" / "census_income.csv"
@@ -246,6 +248,77 @@ class RealDatasetTests(unittest.TestCase):
                 any(column.startswith(prefix) for column in self.cleaned.columns),
                 msg=f"Unexpected one-hot column with prefix {prefix}",
             )
+
+
+class ConfusionMetricsTests(unittest.TestCase):
+    def test_hand_computed_confusion_matrix(self) -> None:
+        y_true = [0, 0, 1, 1, 1, 0]
+        y_score = [0.10, 0.60, 0.60, 0.40, 0.90, 0.50]
+
+        metrics = confusion_metrics(y_true, y_score, threshold=0.5)
+
+        self.assertEqual(metrics["tp"], 2)
+        self.assertEqual(metrics["fp"], 1)
+        self.assertEqual(metrics["fn"], 1)
+        self.assertEqual(metrics["tn"], 2)
+        self.assertEqual(metrics["predicted_positive"], 3)
+        self.assertAlmostEqual(float(metrics["accuracy"]), 4 / 6)
+        self.assertAlmostEqual(float(metrics["precision"]), 2 / 3)
+        self.assertAlmostEqual(float(metrics["recall"]), 2 / 3)
+        self.assertAlmostEqual(float(metrics["f1"]), 2 / 3)
+
+    def test_threshold_comparison_is_strict(self) -> None:
+        metrics = confusion_metrics(
+            [0, 1],
+            [0.5, 0.5],
+            threshold=0.5,
+        )
+
+        self.assertEqual(metrics["predicted_positive"], 0)
+        self.assertEqual(metrics["fn"], 1)
+        self.assertEqual(metrics["tn"], 1)
+        self.assertEqual(float(metrics["precision"]), 0.0)
+        self.assertEqual(float(metrics["recall"]), 0.0)
+        self.assertEqual(float(metrics["f1"]), 0.0)
+
+    def test_real_nn_metrics_at_default_threshold(self) -> None:
+        # These values are recomputed from the saved Task 1 scores at the
+        # dashboard default of 0.362. The Task 1 report's published metrics
+        # correspond to a slightly higher effective threshold; the strict
+        # score > threshold rule is unchanged here.
+        predictions = load_predictions()
+
+        metrics = confusion_metrics(
+            predictions.y_true,
+            predictions.nn_score,
+            threshold=0.362,
+        )
+
+        self.assertEqual(metrics["tp"], 1742)
+        self.assertEqual(metrics["fp"], 997)
+        self.assertEqual(metrics["fn"], 572)
+        self.assertEqual(metrics["tn"], 6409)
+        self.assertEqual(metrics["predicted_positive"], 2739)
+        self.assertAlmostEqual(
+            float(metrics["accuracy"]),
+            0.8385802469135802,
+            delta=0.001,
+        )
+        self.assertAlmostEqual(
+            float(metrics["precision"]),
+            0.6359985396129975,
+            delta=0.001,
+        )
+        self.assertAlmostEqual(
+            float(metrics["recall"]),
+            0.7528089887640449,
+            delta=0.001,
+        )
+        self.assertAlmostEqual(
+            float(metrics["f1"]),
+            0.6894913912527211,
+            delta=0.001,
+        )
 
 
 if __name__ == "__main__":
