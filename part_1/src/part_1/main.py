@@ -14,20 +14,19 @@ from .roc_prc import roc_prc, best_point
 def part_1_main(
         dataset: Path,
         out_data: Path,
-        n_features: int | None = 64,
-        random_state: int = 42,
+        n_features: int,
+        random_state: int,
 ):
     df: DataFrame = pd.read_csv(dataset)
 
     print("- Feature selection")
-    df = feature_selection(
-        df=df,
+    y = df.pop("target")
+    X = feature_selection(
+        X=df,
+        y=y,
         random_state=random_state,
         n_features=n_features
     )
-
-    y = df.pop("target")
-    X = df
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=random_state)
 

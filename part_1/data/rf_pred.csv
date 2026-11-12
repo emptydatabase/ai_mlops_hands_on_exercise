@@ -434,7 +434,7 @@
 11734,False,False
 12104,True,False
 42304,False,False
-40103,True,False
+40103,True,True
 44118,False,False
 44827,True,False
 34142,False,False
@@ -581,7 +581,7 @@
 47118,False,False
 23856,True,True
 44224,True,False
-47410,True,True
+47410,True,False
 14073,False,False
 48111,False,False
 5568,False,False
@@ -649,7 +649,7 @@
 18924,False,False
 37017,False,True
 19548,True,False
-41578,True,False
+41578,True,True
 41030,False,True
 38557,False,True
 33605,True,False
@@ -736,7 +736,7 @@
 22255,False,False
 13203,False,False
 23029,False,True
-11483,True,False
+11483,True,True
 32359,False,False
 32127,False,False
 27196,True,True
@@ -778,7 +778,7 @@
 13259,False,False
 20903,True,True
 42026,False,False
-45904,False,False
+45904,False,True
 31246,False,False
 9793,False,False
 14773,False,True
@@ -828,7 +828,7 @@
 29635,True,False
 28816,False,False
 45697,False,False
-44736,True,False
+44736,True,True
 46735,False,False
 45327,True,True
 37274,True,True
@@ -875,7 +875,7 @@
 44777,False,False
 15561,False,False
 32200,True,False
-5275,False,True
+5275,False,False
 34559,False,False
 36016,True,False
 15526,False,False
@@ -989,7 +989,7 @@
 36130,False,False
 27604,False,False
 10317,False,False
-23445,False,False
+23445,False,True
 20374,True,False
 35832,False,False
 13153,False,False
@@ -1057,7 +1057,7 @@
 36459,False,False
 30327,False,False
 6049,False,False
-45023,False,False
+45023,False,True
 37951,False,False
 2210,False,False
 1792,False,False
@@ -1149,7 +1149,7 @@
 16408,False,False
 13637,False,False
 31165,False,False
-17134,False,True
+17134,False,False
 144,False,False
 44756,False,False
 167,False,False
@@ -1276,12 +1276,12 @@
 34811,False,False
 34717,False,False
 3366,True,False
-11574,False,True
+11574,False,False
 1162,True,True
 46481,False,False
 42375,True,True
 31299,True,False
-20352,True,True
+20352,True,False
 13943,True,False
 44081,False,False
 36676,False,False
@@ -1349,7 +1349,7 @@
 12928,False,False
 40274,False,False
 4064,False,False
-12290,True,False
+12290,True,True
 34181,False,False
 5304,False,False
 34528,False,True
@@ -1379,7 +1379,7 @@
 2372,False,False
 27695,True,True
 609,False,False
-28752,True,True
+28752,True,False
 2579,False,False
 38891,False,False
 15970,True,True
@@ -1388,7 +1388,7 @@
 44666,True,False
 46460,True,True
 9712,False,False
-43990,True,True
+43990,True,False
 15382,True,False
 16413,True,True
 22883,False,False
@@ -1458,7 +1458,7 @@
 19241,False,False
 10189,False,False
 5195,False,True
-31549,True,False
+31549,True,True
 31524,False,False
 30199,False,False
 26796,False,False
@@ -1560,7 +1560,7 @@
 43416,False,False
 45182,False,False
 30239,False,False
-34184,True,False
+34184,True,True
 20916,False,False
 32891,False,False
 29800,False,False
@@ -1587,7 +1587,7 @@
 1448,False,False
 6262,True,True
 9654,False,False
-28720,True,False
+28720,True,True
 30927,True,True
 26735,True,True
 22548,False,True
@@ -1729,7 +1729,7 @@
 20574,False,False
 45312,False,False
 38948,True,True
-30937,False,True
+30937,False,False
 25690,False,False
 11335,False,False
 44991,False,False
@@ -1822,7 +1822,7 @@
 31344,False,True
 12773,False,False
 42168,False,False
-40229,True,True
+40229,True,False
 29679,True,False
 38042,False,False
 42718,True,False
@@ -1874,14 +1874,14 @@
 10852,False,False
 25546,False,False
 38924,False,False
-6194,False,True
+6194,False,False
 28654,False,False
 20342,True,True
 35677,False,False
 41582,True,False
 31544,False,False
 44121,False,False
-40105,False,False
+40105,False,True
 24545,False,False
 46783,False,False
 36030,False,False
@@ -2087,7 +2087,7 @@
 30205,False,False
 17089,False,False
 39899,False,False
-30494,False,True
+30494,False,False
 39956,False,False
 36972,False,False
 33645,False,False
@@ -2099,7 +2099,7 @@
 45684,False,False
 1012,True,True
 4573,True,False
-16228,True,False
+16228,True,True
 26560,False,True
 28219,False,True
 43574,False,False
@@ -2200,7 +2200,7 @@
 5907,False,False
 23209,False,False
 24701,False,False
-39888,False,True
+39888,False,False
 34494,False,False
 3270,False,False
 10783,False,False
@@ -2404,7 +2404,7 @@
 17041,True,True
 19545,False,False
 30634,False,False
-34967,True,False
+34967,True,True
 33762,False,False
 30100,False,False
 41184,False,False
@@ -2443,7 +2443,7 @@
 48026,True,True
 35766,False,False
 16852,False,False
-15910,False,False
+15910,False,True
 48406,False,False
 19451,False,False
 39958,True,True
@@ -2483,7 +2483,7 @@
 25264,False,False
 18180,False,False
 11096,True,True
-18192,False,True
+18192,False,False
 21013,False,False
 35308,False,False
 26706,False,False
@@ -2501,7 +2501,7 @@
 4614,False,False
 29068,False,False
 43913,False,True
-41746,False,False
+41746,False,True
 3707,True,True
 5227,True,False
 33163,False,False
@@ -2558,7 +2558,7 @@
 27784,True,True
 38558,False,False
 581,True,False
-17646,False,False
+17646,False,True
 8919,True,True
 39924,True,False
 32205,False,False
@@ -2647,9 +2647,9 @@
 10791,False,False
 42619,True,False
 30419,True,True
-2608,True,True
+2608,True,False
 45759,False,False
-42841,False,True
+42841,False,False
 37964,False,False
 36917,True,True
 10552,False,True
@@ -2670,7 +2670,7 @@
 35019,True,False
 37922,False,False
 6204,True,True
-32114,True,True
+32114,True,False
 41570,False,False
 15045,True,True
 41038,False,True
@@ -2725,7 +2725,7 @@
 7100,False,False
 24303,True,False
 24432,True,False
-2705,False,True
+2705,False,False
 39537,False,True
 40984,True,True
 13433,True,False
@@ -2983,7 +2983,7 @@
 9225,False,True
 42777,False,False
 23724,False,False
-24294,True,True
+24294,True,False
 7861,False,False
 37983,False,False
 1484,False,False
@@ -3088,7 +3088,7 @@
 41305,False,False
 28153,False,False
 28789,True,True
-35575,True,False
+35575,True,True
 24576,False,False
 45174,True,True
 4877,False,False
@@ -3119,7 +3119,7 @@
 20230,False,False
 25726,True,False
 6016,False,False
-19690,False,False
+19690,False,True
 2211,False,False
 10986,True,True
 44162,True,True
@@ -3183,7 +3183,7 @@
 28012,True,False
 42894,True,False
 46905,False,False
-33008,False,True
+33008,False,False
 23415,True,False
 30525,False,False
 6234,False,True
@@ -3219,7 +3219,7 @@
 15341,False,False
 29325,False,False
 17385,True,False
-45471,False,True
+45471,False,False
 11751,False,False
 47493,False,False
 24410,False,False
@@ -3327,7 +3327,7 @@
 24780,False,True
 7456,False,True
 38855,False,False
-43338,False,False
+43338,False,True
 11863,False,False
 20442,False,False
 173,False,False
@@ -3399,14 +3399,14 @@
 16618,True,False
 37216,False,True
 10445,True,True
-24873,False,True
+24873,False,False
 4579,False,False
 7576,False,False
 22498,False,False
 24598,True,True
 41199,False,False
 9024,False,False
-3555,False,False
+3555,False,True
 15666,True,True
 22532,False,False
 71,False,False
@@ -3486,7 +3486,7 @@
 22939,False,False
 29042,False,False
 27553,False,False
-26652,False,True
+26652,False,False
 16248,True,True
 25873,True,False
 47015,True,False
@@ -3654,7 +3654,7 @@
 21402,False,False
 45474,False,False
 21135,False,False
-39505,True,False
+39505,True,True
 7789,False,False
 10592,False,False
 42028,False,False
@@ -3781,7 +3781,7 @@
 18152,False,False
 31172,False,False
 18314,False,False
-37227,False,False
+37227,False,True
 19530,False,True
 31579,True,True
 34429,False,False
@@ -4000,7 +4000,7 @@
 36715,False,False
 4108,False,False
 37962,False,False
-41181,False,True
+41181,False,False
 22274,False,False
 1976,False,False
 39398,False,False
@@ -4040,7 +4040,7 @@
 34046,False,False
 9590,False,False
 4669,False,False
-1487,False,True
+1487,False,False
 10026,False,False
 38977,True,False
 21581,False,False
@@ -4148,7 +4148,7 @@
 47006,False,False
 26577,False,False
 7635,False,False
-14129,True,False
+14129,True,True
 44902,False,False
 13822,False,False
 31394,False,True
@@ -4208,7 +4208,7 @@
 45705,False,False
 11912,False,False
 23597,False,False
-37516,True,True
+37516,True,False
 25891,False,False
 20770,False,False
 20367,True,True
@@ -4226,7 +4226,7 @@
 39663,False,False
 31992,False,False
 20322,True,False
-45932,False,False
+45932,False,True
 7266,False,False
 15418,False,False
 44249,False,False
@@ -4260,7 +4260,7 @@
 6400,True,True
 35380,False,False
 11904,False,False
-44267,False,True
+44267,False,False
 41373,False,False
 4519,False,False
 33144,True,True
@@ -4298,7 +4298,7 @@
 12147,True,False
 35174,False,False
 23220,False,False
-43536,True,True
+43536,True,False
 20983,False,False
 44263,False,False
 2630,False,False
@@ -4336,7 +4336,7 @@
 33423,False,False
 42785,True,True
 8225,True,True
-35025,True,True
+35025,True,False
 33317,False,False
 3022,True,True
 34348,False,False
@@ -4384,7 +4384,7 @@
 24962,True,True
 21201,False,False
 43446,False,False
-34294,True,True
+34294,True,False
 29308,False,False
 13729,False,False
 36708,False,False
@@ -4398,7 +4398,7 @@
 13321,True,False
 37992,True,False
 28388,True,False
-43229,False,True
+43229,False,False
 48512,False,False
 13314,True,False
 23403,False,False
@@ -4516,7 +4516,7 @@
 16680,False,False
 30142,False,False
 31184,True,True
-31479,True,False
+31479,True,True
 37686,False,False
 45519,True,True
 12781,False,True
@@ -4531,7 +4531,7 @@
 16604,True,False
 23491,False,False
 32774,True,True
-15069,True,False
+15069,True,True
 45653,False,False
 47651,False,False
 35770,True,True
@@ -4539,7 +4539,7 @@
 32513,True,False
 11562,True,True
 5010,False,False
-28447,False,True
+28447,False,False
 44793,True,True
 39539,False,False
 1808,False,True
@@ -4547,7 +4547,7 @@
 44338,False,False
 43362,False,False
 29588,False,False
-42076,False,True
+42076,False,False
 6915,False,False
 27578,False,False
 21920,False,False
@@ -4727,7 +4727,7 @@
 14065,False,False
 7890,False,False
 18109,True,True
-36327,False,False
+36327,False,True
 26712,False,False
 28550,True,True
 2582,False,False
@@ -4831,7 +4831,7 @@
 40155,False,False
 9064,False,False
 27077,True,False
-41625,True,False
+41625,True,True
 33646,False,False
 38903,True,True
 33438,False,False
@@ -4894,7 +4894,7 @@
 2276,True,True
 7592,False,False
 21221,False,False
-39015,True,True
+39015,True,False
 5843,False,False
 4272,False,False
 16113,False,False
@@ -5096,9 +5096,9 @@
 46712,False,False
 10761,True,True
 29624,True,True
-1053,True,True
+1053,True,False
 866,False,False
-1974,True,False
+1974,True,True
 44553,False,False
 4071,True,True
 32907,True,False
@@ -5112,7 +5112,7 @@
 6809,False,False
 44768,False,False
 10855,True,True
-34988,False,False
+34988,False,True
 33096,True,True
 22130,False,False
 30616,True,True
@@ -5156,7 +5156,7 @@
 7743,False,False
 499,False,False
 37324,False,False
-6392,False,True
+6392,False,False
 42601,False,False
 14409,False,True
 44985,False,False
@@ -5182,7 +5182,7 @@
 29547,True,False
 46023,False,False
 22132,False,False
-18785,False,True
+18785,False,False
 42940,False,False
 44730,False,False
 17047,False,False
@@ -5191,7 +5191,7 @@
 11359,False,False
 10146,False,False
 28062,False,False
-36918,True,False
+36918,True,True
 31741,False,False
 36847,False,False
 22321,True,True
@@ -5284,7 +5284,7 @@
 32727,False,False
 23310,True,True
 34760,False,False
-8694,False,True
+8694,False,False
 17353,False,True
 44393,False,False
 17227,True,False
@@ -5327,7 +5327,7 @@
 25638,False,False
 26182,False,False
 11601,False,False
-5929,True,True
+5929,True,False
 10758,True,True
 31427,True,False
 584,False,False
@@ -5368,7 +5368,7 @@
 47613,False,False
 10632,False,False
 32609,True,True
-46030,True,False
+46030,True,True
 36851,False,False
 16503,False,False
 10648,False,False
@@ -5401,7 +5401,7 @@
 32851,False,False
 11993,False,False
 23647,False,False
-34236,True,True
+34236,True,False
 36057,False,False
 6974,False,False
 44896,False,False
@@ -5468,7 +5468,7 @@
 6129,False,False
 42784,False,False
 40596,False,False
-41211,True,True
+41211,True,False
 8350,False,False
 42835,False,False
 44824,False,False
@@ -5508,7 +5508,7 @@
 21967,False,False
 30963,False,False
 46304,False,False
-9685,True,False
+9685,True,True
 6231,False,False
 13504,False,False
 40538,True,False
@@ -5628,7 +5628,7 @@
 8045,False,False
 1952,True,False
 26699,False,False
-45731,True,False
+45731,True,True
 45800,False,False
 39640,False,False
 36096,False,False
@@ -5667,7 +5667,7 @@
 30395,False,False
 21156,False,False
 47199,False,False
-13004,False,False
+13004,False,True
 36384,False,False
 46793,True,False
 18576,False,False
@@ -5679,7 +5679,7 @@
 19908,False,False
 33023,True,True
 36251,False,False
-1317,True,True
+1317,True,False
 6821,False,False
 31790,False,False
 11661,False,False
@@ -5739,7 +5739,7 @@
 22709,False,False
 41109,True,True
 47520,False,False
-14493,True,True
+14493,True,False
 5115,False,False
 35122,True,True
 26772,False,False
@@ -5937,7 +5937,7 @@
 17820,False,False
 6802,True,True
 4503,False,False
-2362,False,False
+2362,False,True
 12141,False,False
 12802,False,False
 10733,False,False
@@ -6128,7 +6128,7 @@
 39177,True,True
 30978,False,False
 19263,False,False
-24247,False,True
+24247,False,False
 17407,False,False
 16094,True,False
 39994,False,False
@@ -6166,7 +6166,7 @@
 14290,False,True
 31617,False,False
 47054,False,False
-6179,False,False
+6179,False,True
 40400,False,False
 673,True,True
 17222,False,False
@@ -6205,7 +6205,7 @@
 4095,True,False
 26650,False,False
 19557,False,False
-22395,False,True
+22395,False,False
 7212,False,False
 41451,False,False
 47212,True,False
@@ -6265,7 +6265,7 @@
 48303,False,False
 34123,False,False
 35629,False,False
-37189,False,True
+37189,False,False
 9068,False,False
 17963,False,False
 5688,False,True
@@ -6328,7 +6328,7 @@
 2495,False,False
 8960,False,False
 19265,False,False
-34137,True,False
+34137,True,True
 20117,True,True
 40862,False,False
 44775,False,False
@@ -6342,7 +6342,7 @@
 3910,True,True
 17036,True,True
 24677,False,False
-12082,True,True
+12082,True,False
 30521,False,False
 26260,False,False
 14146,False,False
@@ -6451,14 +6451,14 @@
 8578,True,False
 41411,False,False
 19101,False,False
-7321,False,True
+7321,False,False
 29952,False,False
 37087,False,False
 44578,False,False
 41510,False,False
 47308,False,False
 42099,False,False
-22833,False,False
+22833,False,True
 9798,False,False
 23680,False,False
 27483,False,False
@@ -6492,7 +6492,7 @@
 36628,False,False
 22134,False,False
 26064,False,False
-14585,True,True
+14585,True,False
 23272,True,False
 38228,False,False
 31441,False,False
@@ -6534,7 +6534,7 @@
 31641,True,True
 44939,False,False
 45226,False,False
-47266,False,True
+47266,False,False
 6631,True,True
 22858,True,True
 21517,True,False
@@ -6550,7 +6550,7 @@
 40592,False,False
 772,False,False
 19460,False,False
-20481,False,True
+20481,False,False
 28023,False,False
 39678,False,False
 25880,True,True
@@ -6614,7 +6614,7 @@
 20135,False,False
 12859,False,False
 2744,False,False
-34810,True,False
+34810,True,True
 47557,False,True
 27787,False,False
 29731,False,False
@@ -6828,7 +6828,7 @@
 15771,False,False
 33851,False,False
 29848,False,False
-18421,True,False
+18421,True,True
 26533,False,False
 8871,True,True
 3661,True,False
@@ -6912,7 +6912,7 @@
 25780,True,True
 5685,True,False
 8040,False,False
-3700,True,False
+3700,True,True
 28241,True,True
 18270,False,False
 17417,True,False
@@ -6977,14 +6977,14 @@
 26194,False,False
 2304,False,True
 17896,False,False
-14521,False,False
+14521,False,True
 1653,False,False
 9366,False,False
 41572,False,False
 33375,True,True
 532,False,False
 41831,True,False
-1243,True,False
+1243,True,True
 962,False,False
 25388,False,False
 10329,False,False
@@ -6993,7 +6993,7 @@
 15199,True,True
 10427,False,False
 45064,True,True
-18363,True,True
+18363,True,False
 48521,False,False
 32465,False,False
 30601,True,True
@@ -7015,7 +7015,7 @@
 34303,True,True
 41494,False,False
 41447,True,True
-36022,False,False
+36022,False,True
 16296,False,True
 34490,False,False
 16584,True,True
@@ -7088,7 +7088,7 @@
 35009,True,True
 31287,False,False
 15978,True,False
-43260,True,True
+43260,True,False
 36532,True,False
 1395,False,True
 47937,False,False
@@ -7153,7 +7153,7 @@
 33863,False,False
 46515,True,False
 8528,False,False
-23268,True,False
+23268,True,True
 32030,False,False
 42481,False,False
 4543,False,False
@@ -7241,7 +7241,7 @@
 30627,False,False
 46998,False,False
 20582,True,True
-46180,False,True
+46180,False,False
 47211,False,False
 17484,True,True
 40413,False,False
@@ -7258,7 +7258,7 @@
 7821,False,False
 37491,True,False
 14363,False,False
-45746,False,True
+45746,False,False
 8615,False,False
 16510,False,False
 11749,False,False
@@ -7322,7 +7322,7 @@
 40929,False,False
 27320,False,False
 23329,True,True
-13182,False,True
+13182,False,False
 14427,False,False
 40375,False,False
 45974,False,False
@@ -7427,7 +7427,7 @@
 10675,False,False
 43725,False,False
 18501,False,False
-22466,False,False
+22466,False,True
 16617,False,True
 27428,False,False
 41837,False,False
@@ -7586,7 +7586,7 @@
 28154,True,False
 4605,False,False
 12431,False,False
-27647,True,True
+27647,True,False
 35180,False,False
 30705,False,False
 32706,False,False
@@ -7783,7 +7783,7 @@
 14467,False,False
 12144,True,True
 41571,False,False
-17311,False,True
+17311,False,False
 39297,False,False
 36991,False,True
 36549,False,False
@@ -7798,7 +7798,7 @@
 35867,True,False
 29219,False,True
 29469,False,False
-9733,True,False
+9733,True,True
 8296,False,False
 23096,False,False
 26857,True,True
@@ -7891,7 +7891,7 @@
 9877,True,False
 26852,True,False
 41532,False,False
-18714,False,True
+18714,False,False
 21877,False,False
 26507,False,False
 17510,False,False
@@ -7903,7 +7903,7 @@
 12475,False,False
 28480,True,True
 2194,False,False
-38781,False,True
+38781,False,False
 19220,False,False
 35045,True,False
 37826,False,False
@@ -8014,7 +8014,7 @@
 44185,False,False
 45895,False,False
 21525,False,False
-24024,True,True
+24024,True,False
 47602,False,False
 17051,False,False
 24267,False,False
@@ -8237,7 +8237,7 @@
 24156,False,False
 7557,False,False
 5726,False,False
-31783,True,True
+31783,True,False
 46883,False,False
 7870,False,False
 47809,False,True
@@ -8342,7 +8342,7 @@
 35173,False,False
 17503,False,False
 47505,True,True
-7886,False,True
+7886,False,False
 16054,False,False
 48577,False,False
 8659,True,True
@@ -8387,7 +8387,7 @@
 30108,True,True
 23783,True,True
 21850,False,False
-9284,True,False
+9284,True,True
 45429,False,False
 34193,True,True
 16315,True,True
@@ -8418,7 +8418,7 @@
 34901,True,False
 8807,False,False
 27346,False,False
-45753,False,True
+45753,False,False
 12006,False,False
 17362,False,False
 8617,False,False
@@ -8458,7 +8458,7 @@
 2299,False,False
 13252,False,False
 19761,False,False
-2186,True,False
+2186,True,True
 41251,True,True
 23881,True,False
 13129,False,False
@@ -8466,7 +8466,7 @@
 43353,False,True
 12551,False,False
 40927,False,False
-18378,True,True
+18378,True,False
 38132,False,False
 4660,False,False
 6394,False,False
@@ -8490,7 +8490,7 @@
 24138,True,True
 6233,False,False
 6253,False,True
-8718,True,False
+8718,True,True
 2990,False,False
 10465,False,False
 20784,False,False
@@ -8542,7 +8542,7 @@
 41588,False,True
 48527,False,False
 11272,True,True
-3942,True,False
+3942,True,True
 30433,True,False
 16841,False,False
 20859,False,False
@@ -8595,7 +8595,7 @@
 5861,False,False
 36140,False,False
 7936,True,False
-40787,True,True
+40787,True,False
 37144,False,False
 18106,True,True
 20562,False,False
@@ -8624,7 +8624,7 @@
 19419,False,False
 33721,True,False
 32915,False,False
-46381,True,True
+46381,True,False
 42859,False,False
 22602,False,False
 9006,False,False
@@ -8701,7 +8701,7 @@
 27593,True,False
 20602,False,False
 1884,True,False
-457,False,True
+457,False,False
 44056,False,False
 11873,False,False
 588,True,True
@@ -8726,9 +8726,9 @@
 4401,False,False
 9062,True,True
 47196,False,False
-46499,True,False
+46499,True,True
 46126,False,False
-20152,True,True
+20152,True,False
 32198,False,False
 14554,True,True
 2826,False,False
@@ -9165,7 +9165,7 @@
 15318,False,False
 36120,False,False
 34649,False,False
-7827,False,False
+7827,False,True
 4811,True,False
 31689,False,False
 15207,False,False
@@ -9210,7 +9210,7 @@
 38794,False,True
 35874,False,False
 46161,True,False
-25644,False,True
+25644,False,False
 7336,False,False
 23757,False,False
 46704,False,False
@@ -9223,7 +9223,7 @@
 45544,True,True
 44558,False,False
 26474,False,False
-28456,False,True
+28456,False,False
 31339,False,False
 36760,True,True
 28692,False,False
@@ -9246,7 +9246,7 @@
 18808,False,False
 26941,False,False
 20376,False,False
-16974,True,False
+16974,True,True
 13972,False,False
 25047,False,False
 27517,False,False
@@ -9265,7 +9265,7 @@
 30365,False,False
 35329,False,False
 44657,False,True
-11532,False,True
+11532,False,False
 43761,False,False
 29676,True,True
 35082,False,False
@@ -9360,7 +9360,7 @@
 22781,False,False
 2357,False,False
 44169,False,False
-42081,False,False
+42081,False,True
 1398,False,False
 35237,False,False
 13671,False,False
@@ -9392,7 +9392,7 @@
 37150,False,False
 41255,True,False
 42852,False,False
-45548,True,True
+45548,True,False
 3643,True,False
 32560,False,False
 40381,False,False
@@ -9440,7 +9440,7 @@
 30590,False,False
 27423,False,False
 35467,False,False
-43152,False,False
+43152,False,True
 40508,False,False
 34114,False,False
 32325,False,False
@@ -9451,7 +9451,7 @@
 4285,False,False
 23882,False,False
 38271,False,False
-36371,True,True
+36371,True,False
 38514,True,False
 1623,False,False
 34356,False,False
@@ -9461,7 +9461,7 @@
 29224,False,False
 7609,False,False
 33731,False,True
-29611,False,False
+29611,False,True
 39438,False,False
 23719,False,False
 41161,False,False
@@ -9473,7 +9473,7 @@
 26960,False,False
 6110,False,False
 19243,False,False
-4919,True,True
+4919,True,False
 12103,False,False
 32079,True,False
 13905,False,False
@@ -9548,7 +9548,7 @@
 34062,True,True
 7275,False,False
 24975,False,False
-30991,False,True
+30991,False,False
 11476,True,True
 38661,True,False
 17398,False,False
