@@ -15,6 +15,7 @@ PATH_DF = ROOT / "dataset" / "census.csv"
 PATH_IMPORTANCE = ROOT / "dataset" / "feature_importance.json"
 PATH_ROC = ROOT / "dataset" / "mlp_roc_curve.csv"
 PATH_PRC = ROOT / "dataset" / "mlp_prc_curve.csv"
+PATH_PRED = ROOT / "dataset" / "mlp_pred.csv"
 
 
 with open(PATH_IMPORTANCE) as fp:
@@ -42,6 +43,12 @@ pipeline = Pipeline([
 pipeline.fit(X_train, y_train)
 
 prediction = pipeline.predict(X_test).astype(np.float32)
+
+pred = DataFrame({
+    "real": y_test,
+    "pred": prediction
+})
+pred.to_csv(PATH_PRED)
 
 fpr, tpr, thresholds = roc_curve(y_test, prediction)
 
