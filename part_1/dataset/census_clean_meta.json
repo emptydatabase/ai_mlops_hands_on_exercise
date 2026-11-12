@@ -1,0 +1,60 @@
+{
+  "source": "datasets/census_income.csv",
+  "rows_before": 48842,
+  "rows_after": 48598,
+  "rows_removed": 244,
+  "rows_removed_sentinel": 244,
+  "sentinel_counts": {
+    "capital-gain": 244,
+    "capital-loss": 0
+  },
+  "positive_count": 11443,
+  "negative_count": 37155,
+  "positive_rate": 0.23546236470636653,
+  "columns": [
+    "age",
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "capital-gain",
+    "capital-loss",
+    "hours-per-week",
+    "native-country",
+    "income",
+    "target"
+  ],
+  "numeric_columns": [
+    "age",
+    "capital-gain",
+    "capital-loss",
+    "hours-per-week"
+  ],
+  "categorical_columns": [
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "native-country"
+  ],
+  "target_columns": [
+    "income",
+    "target"
+  ],
+  "missing_markers_raw": {
+    "workclass": 2799,
+    "occupation": 2809,
+    "native-country": 857
+  },
+  "missing_markers_cleaned": {
+    "workclass": 2794,
+    "occupation": 2804,
+    "native-country": 847
+  }
+}
